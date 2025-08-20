@@ -33,6 +33,7 @@ import { useAgentSelection } from '@/lib/stores/agent-selection-store';
 import { useQueryClient } from '@tanstack/react-query';
 import { threadKeys } from '@/hooks/react-query/threads/keys';
 import { useProjectRealtime } from '@/hooks/useProjectRealtime';
+import { CodeServerModal } from '@/components/thread/code-server-modal';
 
 export default function ThreadPage({
   params,
@@ -76,6 +77,7 @@ export default function ThreadPage({
     runningCount: number;
     runningThreadIds: string[];
   } | null>(null);
+  const [showCodeServerModal, setShowCodeServerModal] = useState(false);
 
 
   // Refs - simplified for flex-column-reverse
@@ -393,6 +395,14 @@ export default function ThreadPage({
     setFileViewerOpen(true);
   }, []);
 
+  const handleOpenCodeServer = useCallback(() => {
+    if (sandboxId) {
+      setShowCodeServerModal(true);
+    } else {
+      toast.error('No sandbox available for Code Server');
+    }
+  }, [sandboxId]);
+
   const toolViewAssistant = useCallback(
     (assistantContent?: string, toolContent?: string) => {
       if (!assistantContent) return null;
@@ -625,6 +635,7 @@ export default function ThreadPage({
         isMobile={isMobile}
         initialLoadCompleted={initialLoadCompleted}
         agentName={agent && agent.name}
+        onOpenCodeServer={handleOpenCodeServer}
       >
         <ThreadError error={error} />
       </ThreadLayout>
@@ -669,6 +680,7 @@ export default function ThreadPage({
         initialLoadCompleted={initialLoadCompleted}
         agentName={agent && agent.name}
         disableInitialAnimation={!initialLoadCompleted && toolCalls.length > 0}
+        onOpenCodeServer={handleOpenCodeServer}
       >
         {/* {workflowId && (
           <div className="px-4 pt-4">
@@ -752,6 +764,15 @@ export default function ThreadPage({
           runningCount={agentLimitData.runningCount}
           runningThreadIds={agentLimitData.runningThreadIds}
           projectId={projectId}
+        />
+      )}
+
+      {sandboxId && (
+        <CodeServerModal
+          isOpen={showCodeServerModal}
+          onClose={() => setShowCodeServerModal(false)}
+          sandboxId={sandboxId}
+          projectName={projectName}
         />
       )}
     </>

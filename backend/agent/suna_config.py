@@ -23,6 +23,7 @@ SUNA_CONFIG = {
         "sb_presentation_tool_v2": False,
         "sb_sheets_tool": True,
         "sb_web_dev_tool": False,
+        "enhanced_web_dev_tool": True,
         "browser_tool": True,
         "data_providers_tool": True,
         "agent_config_tool": True,

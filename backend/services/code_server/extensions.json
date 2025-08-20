@@ -1,0 +1,27 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-vscode.vscode-typescript-next",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-eslint",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "ms-vscode.vscode-markdown",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-git",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode.vscode-terminal",
+    "ms-vscode.vscode-file-browser",
+    "ms-vscode.vscode-search-result",
+    "ms-vscode.theme-default",
+    "ms-vscode.theme-monokai"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-copilot"
+  ]
+}

@@ -68,5 +68,32 @@ services:
     depends_on:
       - backend
 
+  code-server:
+    image: codercom/code-server:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - PASSWORD=suna-code-server
+      - SUDO_PASSWORD=suna-code-server
+    volumes:
+      - code_server_data:/home/coder
+      - code_server_config:/home/coder/.config
+      - ./backend:/workspace/backend:rw
+      - ./frontend:/workspace/frontend:rw
+      - ./sdk:/workspace/sdk:rw
+      - ./backend/services/code_server/startup.sh:/usr/local/bin/startup.sh:ro
+      - ./backend/services/code_server/settings.json:/workspace/backend/services/code_server/settings.json:ro
+      - ./backend/services/code_server/extensions.json:/workspace/backend/services/code_server/extensions.json:ro
+    entrypoint: ["/usr/local/bin/startup.sh"]
+    command: >
+      --bind-addr 0.0.0.0:8080
+      --auth password
+      --disable-telemetry
+      --disable-update-check
+      /workspace
+    restart: unless-stopped
+
 volumes:
   redis_data:
+  code_server_data:
+  code_server_config:
