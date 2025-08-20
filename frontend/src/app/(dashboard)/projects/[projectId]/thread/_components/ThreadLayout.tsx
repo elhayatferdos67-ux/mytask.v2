@@ -41,6 +41,7 @@ interface ThreadLayoutProps {
   initialLoadCompleted: boolean;
   agentName?: string;
   disableInitialAnimation?: boolean;
+  onOpenCodeServer?: () => void;
 }
 
 export function ThreadLayout({
@@ -75,7 +76,8 @@ export function ThreadLayout({
   isMobile,
   initialLoadCompleted,
   agentName,
-  disableInitialAnimation = false
+  disableInitialAnimation = false,
+  onOpenCodeServer
 }: ThreadLayoutProps) {
   const isActuallyMobile = useIsMobile();
   
@@ -102,6 +104,8 @@ export function ThreadLayout({
           onProjectRenamed={onProjectRenamed}
           isMobileView={isMobile}
           debugMode={debugMode}
+          sandboxId={sandboxId}
+          onOpenCodeServer={onOpenCodeServer}
         />
 
         {children}

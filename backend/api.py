@@ -80,6 +80,11 @@ async def lifespan(app: FastAPI):
         logger.debug("Cleaning up agent resources")
         await agent_api.cleanup()
         
+        # Clean up Code Server instances
+        logger.debug("Cleaning up Code Server instances")
+        from sandbox.code_server_api import cleanup_code_servers
+        await cleanup_code_servers()
+        
         # Clean up Redis connection
         try:
             logger.debug("Closing Redis connection")
@@ -190,6 +195,10 @@ api_router.include_router(admin_api.router)
 
 from composio_integration import api as composio_api
 api_router.include_router(composio_api.router)
+
+# Code Server integration
+from sandbox.code_server_api import router as code_server_router
+api_router.include_router(code_server_router)
 
 @api_router.get("/health")
 async def health_check():

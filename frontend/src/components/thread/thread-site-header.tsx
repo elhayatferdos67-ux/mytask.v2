@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button"
-import { FolderOpen, Share2, Monitor } from "lucide-react"
+import { FolderOpen, Share2, Monitor, Code } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { toast } from "sonner"
 import {
@@ -37,6 +37,8 @@ interface ThreadSiteHeaderProps {
   onProjectRenamed?: (newName: string) => void;
   isMobileView?: boolean;
   debugMode?: boolean;
+  sandboxId?: string | null;
+  onOpenCodeServer?: () => void;
 }
 
 export function SiteHeader({
@@ -48,6 +50,8 @@ export function SiteHeader({
   onProjectRenamed,
   isMobileView,
   debugMode,
+  sandboxId,
+  onOpenCodeServer,
 }: ThreadSiteHeaderProps) {
   const pathname = usePathname()
   const [isEditing, setIsEditing] = useState(false)
@@ -203,6 +207,25 @@ export function SiteHeader({
                 <p>Share Chat</p>
               </TooltipContent>
             </Tooltip>
+
+            {/* Code Server Button - only show if sandbox exists */}
+            {sandboxId && onOpenCodeServer && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={onOpenCodeServer}
+                    className="h-9 w-9 cursor-pointer"
+                  >
+                    <Code className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side={isMobile ? "bottom" : "bottom"}>
+                  <p>Open VS Code IDE</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
 
             <Tooltip>
               <TooltipTrigger asChild>
